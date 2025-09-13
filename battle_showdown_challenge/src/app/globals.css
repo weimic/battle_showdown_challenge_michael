@@ -19,7 +19,16 @@
 @theme {
   --animate-slidein: slidein 1s ease-in-out 1;
   --animate-slideinl: slideinl 1s ease-in-out 1;
+  --animate-slideinu: slideinu 1s ease-in-out 1;
+  --animate-fork: fork 1.2s linear 1;
   --animate-idle: idle 5s ease-in-out infinite;
+  --animate-mac: mac 1.2s linear 1;
+  --animate-snowb: snowball 1.2s linear 1;
+  --animate-fall: fall 1.2s linear 1;
+
+  --animate-buildm: buildM 1.2s linear 1;
+  --animate-buildp: buildP 1.2s linear 1;
+  
 
   @keyframes slidein {
     from {
@@ -39,18 +48,100 @@
     }
   }
 
-  @keyframes idle  {
-    0% {
+  @keyframes slideinu {
+    from {
+      transform:translateY(-2000px);
+    }
+    to {
       transform:translateY(0px);
-      transform:translateX(0px);
+    }
+  }
+
+  @keyframes fall {
+    0% {
+      transform:rotateZ(0deg) translateY(0px) translateX(0px);
+    }
+    10% {
+      transform:rotateZ(45deg) translateY(200px) translateX(100px);
+    }
+    100% {
+      transform:rotateZ(45deg) translateY(200px) translateX(100px);
+    }
+  }
+
+  @keyframes fork {
+    0% {
+      transform:translateX(0px) translateY(0px);
     }
     50% {
-      transform:translateY(-10px);
-      transform:translateX(-10px);
+      transform:translateX(20px) translateY(-10px);
+    }
+    83% {
+      transform:translateX(700px) translateY(-200px);
+    }
+    100% {
+      transform:translateX(700px) translateY(-200px);
+    }
+  }
+
+  @keyframes mac {
+    from {
+      transform:translateX(500px);
+    }
+    to {
+      transform:translateX(0px);
+    }
+  }
+
+  @keyframes buildM {
+    0% {
+      transform:translateY(-2000px);
+    }
+    80% {
+      transform:translateY(-100px);
+    }
+
+    100% {
+      transform:translateY(0px);
+    }
+  }
+
+  @keyframes buildP {
+    0% {
+      transform:translateY(200px);
+    }
+    80% {
+      transform:translateY(0px);
     }
     100% {
       transform:translateY(0px);
-      transform:translateX(0px);
+    }
+  }
+
+  @keyframes idle  {
+    0% {
+      transform:translateY(0px) translateX(0px);
+    }
+    50% {
+      transform:translateY(-10px) translateX(-10px);
+    }
+    100% {
+      transform:translateY(0px) translateX(0px);
+    }
+  }
+
+  @keyframes snowball  {
+    0% {
+      transform:translateY(0px) translateX(0px);
+    }
+    50% {
+      transform:translateY(10px) translateX(-10px);
+    }
+    80% {
+      transform:translateY(300px) translateX(-1100px);
+    }
+    100% {
+      transform:translateY(300px) translateX(-1100px);
     }
   }
 }
