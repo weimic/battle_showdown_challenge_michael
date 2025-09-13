@@ -42,14 +42,29 @@
   @keyframes idle  {
     0% {
       transform:translateY(0px);
+      transform:translateX(0px);
     }
     50% {
       transform:translateY(-10px);
+      transform:translateX(-10px);
     }
     100% {
       transform:translateY(0px);
+      transform:translateX(0px);
     }
   }
+}
+
+@layer utilities {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
 }
 
 @media (prefers-color-scheme: dark) {
