@@ -55,18 +55,98 @@ export default function Home() {
   const [win, setWin] = useState(false);
   const [done, setDone] = useState(false);
   const [gameStart, setGameStart] = useState(false);
-  
+
+
   const doneToggle = () => {
     setDone(!done);
   };
 
   const gameToggle = () => {
     setGameStart(!gameStart);
-    const music = new Audio("/pokemon.mp3");
-    music.loop = true;
+    const gameMus = new Audio("/pokemon.mp3");
+    gameMus.loop = true;
+    gameMus.volume = 0.7;
+    gameMus.play();
+  }
+
+  const explodeSFX = () => {
+    const music = new Audio("/explosion.mp3");
+    music.loop = false;
     music.volume = 0.7;
     music.play();
   }
+
+  const sizzleSFX = () => {
+    const music = new Audio("/sizzle.mp3");
+    music.loop = false;
+    music.volume = 0.7;
+    music.play();
+    setTimeout(() => music.pause(), 800);
+  }
+
+  const eatSFX = () => {
+    const music = new Audio("/eat.mp3");
+    music.loop = false;
+    music.volume = 0.7;
+    music.play();
+    setTimeout(() => music.pause(), 800);
+  }
+
+  const windSFX = () => {
+    const music = new Audio("/windhowl.mp3");
+    music.loop = false;
+    music.volume = 0.7;
+    music.play();
+    setTimeout(() => music.pause(), 800);
+  }
+
+  const lightningSFX = () => {
+    const music = new Audio("/lightning.mp3");
+    music.loop = false;
+    music.volume = 0.7;
+    music.play();
+    setTimeout(() => music.pause(), 1000);
+  }
+
+  const slipSFX = () => {
+    const music = new Audio("/slip.mp3");
+    music.loop = false;
+    music.volume = 0.7;
+    music.play();
+    setTimeout(() => music.pause(), 800);
+  }
+
+  const wooshSFX = () => {
+    const music = new Audio("/woosh.mp3");
+    music.loop = false;
+    music.volume = 0.7;
+    music.play();
+    setTimeout(() => music.pause(), 800);
+  }
+
+  const thumpSFX = () => {
+    const music = new Audio("/thump.mp3");
+    music.loop = false;
+    music.volume = 1;
+    music.play();
+    setTimeout(() => music.pause(), 800);
+  }
+
+  const lostSFX = () => {
+    const music = new Audio("/lost.mp3");
+    music.loop = false;
+    music.volume = 1;
+    music.play();
+  }
+
+  const wonSFX = () => {
+    const music = new Audio("/won.mp3");
+    music.loop = false;
+    music.volume = 1;
+    music.play();
+  }
+
+
 
   const [guide, toggleGuide] = useState(false);
   const guideToggle = () => {
@@ -99,6 +179,7 @@ export default function Home() {
     let nJackHealth = jackHealth;
     let nSnowmanHealth = snowmanHealth;
     let healthE = false;
+    let odds = [0.2, 0.3, 0.3, 0.1, 0.1];
 
 
     // Jack stuff
@@ -110,6 +191,8 @@ export default function Home() {
 
       setBuild(true);
       setTimeout(() => setBuild(false), 1200);
+
+      sizzleSFX();
 
     } else if(id == 2) { // Throw Mac
       if(mac>0) {
@@ -123,8 +206,10 @@ export default function Home() {
         setTimeout(() => setJackA(false), 1200);
         setTimeout(() => setThrowa(false), 1200);
 
+        wooshSFX();
         setTimeout(() => setExplE(true), 1000);
         setTimeout(() => setExplE(false), 2000);
+        setTimeout(() => explodeSFX(), 600);
 
       } else {
         addMessage(name + " tried to use Throw Mac, but they had no macs.");
@@ -143,6 +228,7 @@ export default function Home() {
         setHeal(true);
         setTimeout(() => setHeal(false), 1200);
 
+        eatSFX();
       } else {
         addMessage(name + " tried to use Eat Mac, but they had no macs.");
       }
@@ -159,18 +245,19 @@ export default function Home() {
 
       setTimeout(() => setExplE(true), 1000);
       setTimeout(() => setExplE(false), 2000);
+      setTimeout(() => explodeSFX(), 600);
     }
 
     //Snowman stuff
     let snowA = Math.random(); // Snowman Attack ID
-    let odds1 = 0.2;
-    let odds2 = 0.3;
-    let odds3 = 0.3;
-    let odds4 = 0.1;
-    let odds5 = 0.1;
+    let odds1 = 0;
+    let odds2 = 0;
+    let odds3 = 0;
+    let odds4 = 0;
+    let odds5 = 1;
 
 
-    if(snowA < (odds1)) { // Snow-ShieldTM
+    if(snowA < odds[0]) { // Snow-ShieldTM
       setSnowMove("SnowShield");
       nAtt *= 0.201;
       addMessage(eName+" used Snow-Shield™!");
@@ -178,8 +265,9 @@ export default function Home() {
 
       setTimeout(() => setSnowpile(true), 1000);
       setTimeout(() => setSnowpile(false), 2000);
+      setTimeout(() => thumpSFX(), 500);
 
-    } else if(snowA < (odds1 + odds2)) { // Snow-BallTM
+    } else if(snowA < (odds[0] + odds[1])) { // Snow-BallTM
       setSnowMove("SnowBall");
       nPain *= 10;
       setTimeout(() => addMessage(eName+" used Snow-Ball™!"), 999);
@@ -187,10 +275,12 @@ export default function Home() {
       setTimeout(() => setExpl(false), 3000);
 
       setTimeout(() => setSnowB(true), 1000);
+      setTimeout(() => wooshSFX(), 1000);
       setTimeout(() => setSnowB(false), 2000);
 
+      setTimeout(() => explodeSFX(), 1600);
 
-    } else if(snowA < (odds1 + odds2 + odds3)) { // Snow-IngTM
+    } else if(snowA < (odds[0] + odds[1] + odds[2])) { // Snow-IngTM
       setSnowMove("SnowIng");
       nSnowmanHealth += 10;
       healthE = true;
@@ -202,12 +292,15 @@ export default function Home() {
       setTimeout(() => setHealE(false), 2000);
 
       setTimeout(() => setSnowing(true), 1000);
+      setTimeout(() => windSFX(), 800);
       setTimeout(() => setSnowing(false), 2000);
+
+
 
       
 
 
-    } else if(snowA < (odds1 + odds2 + odds3 + odds4)) { // Snow-IceTM
+    } else if(snowA < (odds[0] + odds[1] + odds[2] + odds[3])) { // Snow-IceTM
       let snowB = Math.random();
       addMessage(eName+" used Snow-Ice™!");
       if(snowB < 0.5) { // Odds of Snow-Ice working
@@ -219,7 +312,7 @@ export default function Home() {
         setEat(false);
         setHeal(false);
 
-        addMessage("It worked!");
+        addMessage("Snow-Ice™ worked!");
         addMessage(name+" slipped and did nothing this turn.");
 
         setTimeout(() => setExpl(true), 2000);
@@ -229,34 +322,39 @@ export default function Home() {
         setTimeout(() => setIce(false), 2200);
 
         setTimeout(() => setFall(true), 2000);
+        setTimeout(() => slipSFX(), 2000);
         setTimeout(() => setFall(false), 3000);
       } else {
         setTimeout(() => setSnowMove("SnowIce FAILS"), 1500);
-        setTimeout(() => addMessage("It failed!"), 1501);
+        setTimeout(() => addMessage("Snow-Ice™ failed!"), 1501);
       }
 
 
-    } else if(snowA < (odds1 + odds2 + odds3 + odds4 + odds5)) { // Snow-Storm
+    } else if(snowA < (odds[0] + odds[1] + odds[2] + odds[3] + odds[4])) { // Snow-Storm
       setTimeout(() => addMessage(eName+" used Snow-Storm™!"),998);
       let snowB = Math.random();
       if(snowB < 0.6) { // Odds of Snow-Storm working
         nPain *= 30;
         setSnowMove("SnowStorm WORKS");
-        setTimeout(() => addMessage("It worked!"), 999);
+        setTimeout(() => addMessage("Snow-Storm™ worked!"), 999);
 
         setTimeout(() => setExpl(true), 2000);
         setTimeout(() => setExpl(false), 3000);
 
+        setTimeout(() => explodeSFX(), 1600);
+
         setTimeout(() => setSnowing(true), 1000);
+        setTimeout(() => windSFX(), 800);
         setTimeout(() => setSnowing(false), 2000);
 
         setTimeout(() => setLightning(true), 1000);
+        setTimeout(() => lightningSFX(), 600);
         setTimeout(() => setLightning(false), 2000);
 
 
       } else {
         setSnowMove("SnowStorm FAILS");
-        setTimeout(() => addMessage("It failed!"), 999);
+        setTimeout(() => addMessage("Snow-Storm™ failed!"), 999);
       }
     }
 
@@ -275,18 +373,20 @@ export default function Home() {
 
     
     // Keep health within bounds
-    if(nJackHealth < 0) {
+    if(nJackHealth <= 0) {
       nJackHealth = 0;
       setTimeout(() => addMessage(name+" died!"), 2001);
+      setTimeout(() => lostSFX(), 3000);
     }
     if(nJackHealth > 100) {
       nJackHealth = 100;
       setTimeout(() => addMessage(name+" healed to full health."), 996);
     }
-    if(nSnowmanHealth < 0) { 
+    if(nSnowmanHealth <= 0) { 
       nSnowmanHealth = 0;
       setTimeout(() => addMessage(eName + " died!"), 996);
       setWin(true);
+      setTimeout(() => wonSFX(), 3000);
     }
     if(nSnowmanHealth > 100) {
       nSnowmanHealth = 100;
@@ -538,7 +638,7 @@ export default function Home() {
                   Build Mac
                 </div>
                 <div className="text-sm mb-5">
-                  Gain a Mac, but take 1.5x damage when you are attacked.
+                  Gain a Mac, but take 1.5x damage if you are attacked this turn.
                 </div>
               </div>
               <div className="border-b-2 mb-5">
